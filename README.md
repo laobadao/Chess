@@ -1,0 +1,2 @@
+# GoBangLandCom
+practice gobang algorithm
