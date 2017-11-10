@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/GoBangLandCom.iml" filepath="$PROJECT_DIR$/GoBangLandCom.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Chess.iml" filepath="$PROJECT_DIR$/Chess.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chess/chess.iml" filepath="$PROJECT_DIR$/chess/chess.iml" />
     </modules>
   </component>
 </project>
