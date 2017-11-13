@@ -3,6 +3,8 @@ package com.combanc.comgobang;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,10 +20,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.utils.ImageUtils;
 import com.combanc.comgobang.game.Game;
 import com.combanc.comgobang.game.GameConstants;
 import com.combanc.comgobang.game.GameView;
 import com.combanc.comgobang.game.Player;
+import com.combanc.comgobang.game.ScreenShotUtil;
 
 
 /**
@@ -105,8 +109,8 @@ public class DoubleGameActivity extends Activity implements View.OnClickListener
 
     private void initViews() {
 //           = (GameView) findViewById(R.id.game_view);
-        LinearLayout game_ll=(LinearLayout)findViewById(R.id.game_ll);
-        mGameView=new GameView(this);
+        LinearLayout game_ll = (LinearLayout) findViewById(R.id.game_ll);
+        mGameView = new GameView(this);
         game_ll.addView(mGameView);
 
         mBlackWin = (TextView) findViewById(R.id.black_win);
@@ -304,9 +308,47 @@ public class DoubleGameActivity extends Activity implements View.OnClickListener
     }
 
     public void startScreen() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+//                ScreenShotUtil.takeScreenShot(DoubleGameActivity.this);
+                mGameView.saveScreenshot();
+                Bitmap background = ScreenShotUtil.cutStatusBarScreen(DoubleGameActivity.this);
+                Bitmap foreground = ImageUtils.getBitmap(ScreenShotUtil.SDCARD_CLASSROOM_PATH_SCREENSHOT + "/" + "surface.png");
+                String newFile = ScreenShotUtil.SDCARD_CLASSROOM_PATH_SCREENSHOT + "/" + "combine.png";
+                ImageUtils.save(combineBitmap(background, foreground), newFile, Bitmap.CompressFormat.PNG);
+            }
+        }).start();
 
-        mGameView.saveScreenshot();
     }
+
+    /**
+     * 合并两张bitmap为一张
+     *
+     * @param background
+     * @param foreground
+     * @return Bitmap
+     */
+
+    public static Bitmap combineBitmap(Bitmap background, Bitmap foreground) {
+
+        if (background == null) {
+            return null;
+        }
+        int bgWidth = background.getWidth();
+        int bgHeight = background.getHeight();
+        int fgWidth = foreground.getWidth();
+        int fgHeight = foreground.getHeight();
+        Bitmap newmap = Bitmap.createBitmap(bgWidth, bgHeight, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(newmap);
+        canvas.drawBitmap(background, 0, 0, null);
+        canvas.drawBitmap(foreground, /*(bgWidth - fgWidth) / 2*/20, /*(bgHeight - fgHeight) / 2*/20, null);
+        canvas.save(Canvas.ALL_SAVE_FLAG);
+        canvas.restore();
+        return newmap;
+
+    }
+
 
     private void inputNumber(int num) {
         if (mXNumTv.getText().equals("x")) {

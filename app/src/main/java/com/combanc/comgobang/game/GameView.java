@@ -10,7 +10,6 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.os.Environment;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -18,6 +17,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
+import com.blankj.utilcode.utils.FileUtils;
 import com.combanc.comgobang.R;
 import com.combanc.comgobang.surshot.ViewThread;
 
@@ -446,16 +446,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     private ViewThread mThread;
 
 
-    private String mScreenshotPath = Environment.getExternalStorageDirectory() + "/sur";
-
     public void saveScreenshot() {
-        Log.d(TAG, "saveScreenshot(): " );
+        Log.d(TAG, "saveScreenshot(): ");
         if (ensureSDCardAccess()) {
+            String fileName = ScreenShotUtil.SDCARD_CLASSROOM_PATH_SCREENSHOT + "/" + "surface.png";
+            FileUtils.deleteFile(fileName);
             Log.d(TAG, "saveScreenshot: " + ensureSDCardAccess());
             Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bitmap);
             doDraw(canvas);
-            File file = new File(mScreenshotPath + "/" + System.currentTimeMillis() + ".png");
+            File file = new File(fileName);
             FileOutputStream fos;
             try {
                 fos = new FileOutputStream(file);
@@ -471,8 +471,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     private boolean ensureSDCardAccess() {
-        File file = new File(mScreenshotPath);
-        Log.d(TAG, "ensureSDCardAccess: "+mScreenshotPath);
+        File file = new File(ScreenShotUtil.SDCARD_CLASSROOM_PATH_SCREENSHOT);
         if (file.exists()) {
             return true;
         } else if (file.mkdirs()) {
