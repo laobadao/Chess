@@ -350,12 +350,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public void drawNumber(Canvas canvas) {
         // 画纵轴坐标
         for (int i = 0; i < mChessboardWidth; i++) {
-            canvas.drawText(Integer.toString(i), left + 10, bottom - (i * mChessSize) - mChessSize / 2 - top + left, numberPaint);
+            canvas.drawText(Integer.toString(i), left + left/2, bottom - (i * mChessSize) - mChessSize / 2 - top + left, numberPaint);
         }
 
         // 画横轴坐标
         for (int i = 1; i < mChessboardWidth; i++) {
-            canvas.drawText(Integer.toString(i), left + (i * mChessSize) + 20, bottom - top, numberPaint);
+            canvas.drawText(Integer.toString(i), left + (i * mChessSize) + numberPaint.getTextSize()/2, bottom - top, numberPaint);
         }
 
 
