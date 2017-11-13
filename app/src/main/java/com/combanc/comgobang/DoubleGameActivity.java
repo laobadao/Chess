@@ -313,6 +313,11 @@ public class DoubleGameActivity extends Activity implements View.OnClickListener
             public void run() {
 //                ScreenShotUtil.takeScreenShot(DoubleGameActivity.this);
                 mGameView.saveScreenshot();
+                boolean is = DoubleGameActivity.this.getLocalClassName().equals(DoubleGameActivity.class.getSimpleName());
+                Log.d(TAG, "DoubleGameActivity.this.getLocalClassName():  " + DoubleGameActivity.this.getLocalClassName());
+                Log.d(TAG, "DoubleGameActivity.class.getCanonicalName():  " + DoubleGameActivity.class.getSimpleName());
+
+                Log.d(TAG, "DoubleGameActivity  is :  " + is);
                 Bitmap background = ScreenShotUtil.cutStatusBarScreen(DoubleGameActivity.this);
                 Bitmap foreground = ImageUtils.getBitmap(ScreenShotUtil.SDCARD_CLASSROOM_PATH_SCREENSHOT + "/" + "surface.png");
                 String newFile = ScreenShotUtil.SDCARD_CLASSROOM_PATH_SCREENSHOT + "/" + "combine.png";
@@ -337,12 +342,10 @@ public class DoubleGameActivity extends Activity implements View.OnClickListener
         }
         int bgWidth = background.getWidth();
         int bgHeight = background.getHeight();
-        int fgWidth = foreground.getWidth();
-        int fgHeight = foreground.getHeight();
         Bitmap newmap = Bitmap.createBitmap(bgWidth, bgHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(newmap);
         canvas.drawBitmap(background, 0, 0, null);
-        canvas.drawBitmap(foreground, /*(bgWidth - fgWidth) / 2*/20, /*(bgHeight - fgHeight) / 2*/20, null);
+        canvas.drawBitmap(foreground, 20, 20, null);
         canvas.save(Canvas.ALL_SAVE_FLAG);
         canvas.restore();
         return newmap;

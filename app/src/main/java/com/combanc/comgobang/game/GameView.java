@@ -355,7 +355,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         // 画横轴坐标
         for (int i = 1; i < mChessboardWidth; i++) {
-            canvas.drawText(Integer.toString(i), left + (i * mChessSize) + 20, bottom - 8/*- mChessSize /4*/, numberPaint);
+            canvas.drawText(Integer.toString(i), left + (i * mChessSize) + 20, bottom - top, numberPaint);
         }
 
 
@@ -460,7 +460,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             try {
                 fos = new FileOutputStream(file);
                 boolean issu = bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
-                Log.d(TAG, "issu: " + issu);
                 fos.close();
             } catch (FileNotFoundException e) {
                 Log.e(TAG, "FileNotFoundException", e);
