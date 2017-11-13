@@ -10,9 +10,9 @@ public class ViewThread extends Thread {
     private SurfaceHolder mHolder;
     private boolean mRun = false;
 
-    public ViewThread(GameView panel/*,SurfaceHolder mHolder*/) {
+    public ViewThread(GameView panel) {
         mPanel = panel;
-        this.mHolder =mPanel.getHolder() /*mHolder*/;
+        this.mHolder =mPanel.getHolder();
     }
     
     public void setRunning(boolean run) {

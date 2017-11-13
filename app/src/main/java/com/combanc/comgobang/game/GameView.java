@@ -182,6 +182,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void doDraw(Canvas mCanvas) {
+//        对于 lockCanvas unlockCanvasAndPost 全部在ViewThread 中执行
 //        Canvas canvas = mHolder.lockCanvas();
         if (mHolder == null || mCanvas == null) {
             return;
@@ -417,7 +418,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         // 初始化棋盘
         drawChessBoard();
         if (!mThread.isAlive()) {
-            mThread = new ViewThread(this/*,holder*/);
+            mThread = new ViewThread(this);
             mThread.setRunning(true);
             mThread.start();
         }
